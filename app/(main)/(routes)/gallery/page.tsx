@@ -5,7 +5,7 @@ const fetchResumes = async () => {
   try {
     const albumData = await prisma.album.findMany({
       include: {
-        photo: true,
+        photos: true,
       },
     });
 

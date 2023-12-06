@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as z from "zod";
 
 import axios from "axios";
@@ -24,6 +24,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 // query client
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useSidebarUpdate } from "@/hooks/use-sidebar-refresh";
 
 //schema
 const formSchema = z.object({
@@ -33,6 +34,7 @@ const formSchema = z.object({
 });
 
 const CreateButton = () => {
+  const { onUpdate } = useSidebarUpdate();
   const queryClient = useQueryClient();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,21 +52,24 @@ const CreateButton = () => {
   //ak posielam request na API, vyuzivam async
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`/api/albums/create`, values);
-      toast.success("Albums has been created!");
-      setIsOpen(false);
-      router.refresh();
+      const data = await axios.post(`/api/albums/create`, values);
+      if (data) {
+        toast.success("Albums has been created!");
+        setIsOpen(false);
+        onUpdate();
+        router.refresh();
+      }
     } catch (error) {
       toast.error("Error has occured, could not create album!");
     }
   };
 
-  const mutation = useMutation({
-    mutationFn: onSubmit,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["albums"] });
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: onSubmit,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["albums"] });
+  //   },
+  // });
 
   return (
     <Dialog

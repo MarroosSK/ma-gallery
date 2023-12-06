@@ -76,50 +76,20 @@ const SingleAlbum = ({ initialData }: any) => {
           pressed={switcher === "swiper"}
           onPressedChange={() => setSwitcher("swiper")}
         >
-          <Projector className="h-4 w-4" />
+          <Imageicon className="h-4 w-4" />
         </Toggle>
         <Toggle
           size="sm"
           pressed={switcher === ""}
           onPressedChange={() => setSwitcher("")}
         >
-          <Imageicon className="h-4 w-4" />
+          <Projector className="h-4 w-4" />
         </Toggle>
       </div>
       {switcher === "swiper" ? (
-        <Swiper
-          grabCursor={true}
-          effect={"creative"}
-          creativeEffect={{
-            prev: {
-              shadow: true,
-              translate: [0, 0, -400],
-            },
-            next: {
-              translate: ["100%", 0, 0],
-            },
-          }}
-          modules={[EffectCreative]}
-          className="mySwiper"
-        >
-          {initialData.photo &&
-            initialData.photo.map((pic: any, index: number) => (
-              <SwiperSlide key={index}>
-                <Image
-                  src={pic.url}
-                  alt="product preview"
-                  width={400}
-                  height={500}
-                  quality={100}
-                  className="rounded-md bg-white dark:bg-slate-800  p-4 shadow-2xl ring-1 ring-indigo-900/10"
-                />
-              </SwiperSlide>
-            ))}
-        </Swiper>
-      ) : (
         <div className="w-full flex flex-wrap items-center justify-center gap-3">
-          {initialData.photo &&
-            initialData.photo.map((pic: any, index: number) => (
+          {initialData.photos &&
+            initialData.photos.map((pic: any, index: number) => (
               <div key={index} className="relative">
                 <Image
                   src={pic.url}
@@ -140,8 +110,38 @@ const SingleAlbum = ({ initialData }: any) => {
               </div>
             ))}
         </div>
+      ) : (
+        <Swiper
+          grabCursor={true}
+          effect={"creative"}
+          creativeEffect={{
+            prev: {
+              shadow: true,
+              translate: [0, 0, -400],
+            },
+            next: {
+              translate: ["100%", 0, 0],
+            },
+          }}
+          modules={[EffectCreative]}
+          className="mySwiper"
+        >
+          {initialData.photos &&
+            initialData.photos.map((pic: any, index: number) => (
+              <SwiperSlide key={index}>
+                <Image
+                  src={pic.url}
+                  alt="product preview"
+                  width={400}
+                  height={500}
+                  quality={100}
+                  className="rounded-md bg-white dark:bg-slate-800  p-4 shadow-2xl ring-1 ring-indigo-900/10"
+                />
+              </SwiperSlide>
+            ))}
+        </Swiper>
       )}
-      {initialData.photo && initialData.photo.length === 0 && (
+      {initialData.photos && initialData.photos.length === 0 && (
         <h2 className="min-h-[27px] text-sm py-1 pr-3 w-full  flex items-center text-muted-foreground font-medium pl-[12px]">
           No photo, start by clicking on add photo button
         </h2>

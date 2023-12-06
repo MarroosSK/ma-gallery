@@ -19,7 +19,7 @@ export async function DELETE(
         userId,
       },
       include: {
-        photo: true,
+        photos: true,
       },
     });
     console.log(deleteAlbum);

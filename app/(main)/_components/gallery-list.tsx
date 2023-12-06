@@ -5,9 +5,9 @@ import Link from "next/link";
 export const GalleryList = ({ myAlbums }: { myAlbums: any }) => {
   return (
     <>
-      {myAlbums.album && myAlbums.album.length !== 0 ? (
+      {myAlbums.albums && myAlbums.albums.length !== 0 ? (
         <ul className="mt-3 flex flex-col divide-y ">
-          {myAlbums.album.map((res: any) => (
+          {myAlbums.albums.map((res: any) => (
             <li
               key={res?.id}
               className="col-span-1 divide-y divide-gray-200 rounded-lg  shadow transition hover:shadow-lg "

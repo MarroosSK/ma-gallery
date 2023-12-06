@@ -12,10 +12,9 @@ const getAlbum = async (id: string) => {
   const response = await prisma.album.findUnique({
     where: {
       id: id,
-      userId,
     },
     include: {
-      photo: true,
+      photos: true,
     },
   });
   return response;

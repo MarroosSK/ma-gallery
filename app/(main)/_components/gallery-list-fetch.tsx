@@ -1,29 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { GalleryList } from "./gallery-list";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { useSidebarUpdate } from "@/hooks/use-sidebar-refresh";
 
 const GalleryListFetch = () => {
   const router = useRouter();
+  const { isUpdated, onDoneUpdate } = useSidebarUpdate();
 
-  const { isPending, isError, data, error } = useQuery({
+  const { isPending, isError, data, error, refetch } = useQuery({
     queryKey: ["albums"],
     queryFn: async () => {
       const response = await axios.get(`/api/albums`);
 
-      if (response) {
+      if (isUpdated === true) {
         toast.success("Albums are ready in sidebar!");
-        router.refresh();
+        refetch();
+        onDoneUpdate();
+      }
+      if (response) {
         return response.data;
       }
     },
-    staleTime: Infinity,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [isUpdated]);
 
   if (isPending) {
     return (

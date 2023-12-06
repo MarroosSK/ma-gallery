@@ -13,7 +13,6 @@ export async function GET(req: Request) {
     const findUser = await prisma.user.findFirst({
       where: {
         id: userId,
-        userId,
       },
     });
 
@@ -21,7 +20,6 @@ export async function GET(req: Request) {
       await prisma.user.create({
         data: {
           id: userId,
-          userId,
         },
       });
     }
@@ -29,10 +27,9 @@ export async function GET(req: Request) {
     const userAlbums = await prisma.user.findFirst({
       where: {
         id: userId,
-        userId,
       },
       include: {
-        album: true,
+        albums: true,
       },
     });
     // console.log(userFiles);

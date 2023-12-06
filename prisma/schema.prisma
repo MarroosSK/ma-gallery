@@ -11,17 +11,15 @@ datasource db {
 }
 
 model User {
-  id     String @id @unique
-  userId String //matches kinde user id
-
-  album Album[]
+  id     String  @id @unique
+  albums Album[]
 }
 
 model Album {
   id          String  @id @default(cuid())
   name        String
   description String?
-  photo       Photo[]
+  photos      Photo[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,10 +29,11 @@ model Album {
 }
 
 model Photo {
-  id String @id @default(cuid())
+  id  String @id @default(cuid())
+  url String
 
-  url       String
   createdAt DateTime @default(now())
-  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
-  albumId   String
+
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  albumId String
 }

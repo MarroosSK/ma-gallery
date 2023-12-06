@@ -26,7 +26,6 @@ export async function POST(req: Request) {
       user = await prisma.user.create({
         data: {
           id: userId,
-          userId,
         },
       });
     }

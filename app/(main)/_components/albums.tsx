@@ -68,10 +68,10 @@ const Albums = ({ myAlbums }: { myAlbums: any }) => {
                       )}
                     </Button>
                   </div>
-                  {res.photo.length > 0 ? (
+                  {res.photos.length > 0 ? (
                     <Link href={`/gallery/${res?.id}`}>
                       <Image
-                        src={res.photo[0].url}
+                        src={res.photos[0].url}
                         alt="foto"
                         width={350}
                         height={400}
