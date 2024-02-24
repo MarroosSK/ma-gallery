@@ -15,38 +15,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import GalleryListFetch from "./gallery-list-fetch";
 import { Item } from "./item";
-import "./sidebar.css";
 
-function SidebarTest() {
+function Sidebar() {
   const router = useRouter();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
   const settings = useSettings();
-
-  const startResizing = React.useCallback(() => {
-    setIsResizing(true);
-  }, []);
-
-  const stopResizing = React.useCallback(() => {
-    setIsResizing(false);
-  }, []);
-
-  const resize = React.useCallback(
-    (mouseMoveEvent: any) => {
-      if (isResizing && sidebarRef.current) {
-        setSidebarWidth(
-          mouseMoveEvent.clientX -
-            sidebarRef.current.getBoundingClientRect().left
-        );
-      }
-    },
-    [isResizing]
-  );
 
   const resetWidth = () => {
     if (sidebarRef.current) {
@@ -64,15 +42,6 @@ function SidebarTest() {
     }
   };
 
-  React.useEffect(() => {
-    window.addEventListener("mousemove", resize);
-    window.addEventListener("mouseup", stopResizing);
-    return () => {
-      window.removeEventListener("mousemove", resize);
-      window.removeEventListener("mouseup", stopResizing);
-    };
-  }, [resize, stopResizing]);
-
   useEffect(() => {
     if (isMobile) {
       collapse();
@@ -88,7 +57,7 @@ function SidebarTest() {
         style={{ width: sidebarWidth }}
         onMouseDown={(e) => e.preventDefault()}
         className={cn(
-          " group/sidebar h-full   overflow-y-auto relative flex w-60 flex-col   max-w-[350px]"
+          " group/sidebar h-full   overflow-x-hidden relative flex w-60 flex-col   max-w-[350px] transition-all ease-in-out"
         )}
       >
         <div className="flex flex-col justify-end mb-5 gap-y-2 absolute right-3 p-4">
@@ -99,7 +68,7 @@ function SidebarTest() {
             <UserButton />
           </div>
         </div>
-        <div className="mt-[85px]">
+        <div className="pl-3 mt-[85px]">
           <Item label="Home" icon={HomeIcon} onClick={() => router.push("/")} />
           <Item label="Settings" icon={Settings} onClick={settings.onOpen} />
           <Item
@@ -108,20 +77,16 @@ function SidebarTest() {
             onClick={() => router.push("/gallery")}
           />
         </div>
-        <div className="w-full mt-4">
-          <h2 className="min-h-[27px] text-sm py-1 pr-3 w-full  flex items-center text-muted-foreground font-medium pl-[12px]">
+        <div className="pl-3 w-full mt-6">
+          <h2 className=" text-muted-foreground font-semibold pl-[12px]">
             Albums
           </h2>
 
           <GalleryListFetch />
         </div>
       </div>
-      <div
-        className="w-1   bg-slate-100  shadow-sm cursor-col-resize"
-        onMouseDown={startResizing}
-      />
 
-      <div className="bg-transparent py-2">
+      <div className="bg-transparent p-4">
         {isCollapsed && (
           <MenuIcon
             onClick={resetWidth}
@@ -134,4 +99,4 @@ function SidebarTest() {
   );
 }
 
-export default SidebarTest;
+export default Sidebar;

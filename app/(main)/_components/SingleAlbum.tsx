@@ -5,12 +5,12 @@ import { useImage } from "@/hooks/use-image";
 
 import Image from "next/image";
 import { useState } from "react";
-import { EffectCreative } from "swiper/modules";
+import { EffectCreative, EffectFlip } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/effect-creative";
+import "swiper/css/effect-flip";
 
 import { Toggle } from "@/components/ui/toggle";
 import { usePreviewImage } from "@/hooks/use-preview-image";
@@ -59,32 +59,39 @@ const SingleAlbum = ({ initialData }: any) => {
   return (
     <main className="mx-auto max-w-7xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-4xl text-slate-500">
+        <h1 className="mb-3 font-bold text-4xl text-primary">
           {initialData.name}
         </h1>
         <Button
-          variant="outline"
           onClick={handleAddToAlbum}
-          className="flex items-center gap-x-2"
+          size="sm"
+          variant="ghost"
+          className="border border-primary flex items-center gap-x-2"
         >
           Add Photo <ImagePlus />
         </Button>
       </div>
-      <div className="w-[75px] bg-transparent rounded-md">
-        <Toggle
-          size="sm"
-          pressed={switcher === "swiper"}
-          onPressedChange={() => setSwitcher("swiper")}
-        >
-          <Imageicon className="h-4 w-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={switcher === ""}
-          onPressedChange={() => setSwitcher("")}
-        >
-          <Projector className="h-4 w-4" />
-        </Toggle>
+      <div className="flex gap-x-3 bg-transparent rounded-md">
+        <div className="flex flex-col">
+          <Toggle
+            size="sm"
+            pressed={switcher === "swiper"}
+            onPressedChange={() => setSwitcher("swiper")}
+          >
+            <Imageicon className="h-4 w-4" />
+          </Toggle>
+          <p className="text-xs text-muted-foreground">Classic</p>
+        </div>
+        <div className="flex flex-col">
+          <Toggle
+            size="sm"
+            pressed={switcher === ""}
+            onPressedChange={() => setSwitcher("")}
+          >
+            <Projector className="h-4 w-4" />
+          </Toggle>
+          <p className="text-xs text-muted-foreground">Swiper</p>
+        </div>
       </div>
       {switcher === "swiper" ? (
         <div className="w-full flex flex-wrap items-center justify-center gap-3">
@@ -94,10 +101,10 @@ const SingleAlbum = ({ initialData }: any) => {
                 <Image
                   src={pic.url}
                   alt="product preview"
-                  width={250}
-                  height={250}
+                  width={400}
+                  height={400}
                   quality={100}
-                  className="rounded-md bg-white dark:bg-slate-800 p-4 shadow-2xl ring-1 ring-indigo-900/10 cursor-pointer"
+                  className="h-[400px] rounded-md bg-white dark:bg-slate-800 p-4  cursor-pointer"
                   onClick={() => handlePreview(pic.url)}
                 />
                 <Button
@@ -113,17 +120,8 @@ const SingleAlbum = ({ initialData }: any) => {
       ) : (
         <Swiper
           grabCursor={true}
-          effect={"creative"}
-          creativeEffect={{
-            prev: {
-              shadow: true,
-              translate: [0, 0, -400],
-            },
-            next: {
-              translate: ["100%", 0, 0],
-            },
-          }}
-          modules={[EffectCreative]}
+          effect={"flip"}
+          modules={[EffectFlip]}
           className="mySwiper"
         >
           {initialData.photos &&
@@ -135,16 +133,19 @@ const SingleAlbum = ({ initialData }: any) => {
                   width={400}
                   height={500}
                   quality={100}
-                  className="rounded-md bg-white dark:bg-slate-800  p-4 shadow-2xl ring-1 ring-indigo-900/10"
+                  className="h-[400px] rounded-md bg-white dark:bg-slate-800   shadow-2xl"
                 />
               </SwiperSlide>
             ))}
         </Swiper>
       )}
       {initialData.photos && initialData.photos.length === 0 && (
-        <h2 className="min-h-[27px] text-sm py-1 pr-3 w-full  flex items-center text-muted-foreground font-medium pl-[12px]">
-          No photo, start by clicking on add photo button
-        </h2>
+        <div className="mt-[220px] flex flex-col items-center gap-2">
+          <Imageicon className="h-16 w-16 text-primary" />
+          <h2 className=" text-lg py-1   text-muted-foreground font-medium ">
+            0 photos in this album , start by clicking on add photo button
+          </h2>
+        </div>
       )}
     </main>
   );

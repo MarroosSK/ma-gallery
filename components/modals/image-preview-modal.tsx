@@ -18,7 +18,7 @@ export const ImagePreviewModal = () => {
             width={250}
             height={250}
             quality={100}
-            className="w-full h-full rounded-md bg-white p-4 shadow-2xl ring-1 ring-indigo-900/10"
+            className="w-full h-[400px] rounded-md  p-4  "
           />
         )}
       </DialogContent>

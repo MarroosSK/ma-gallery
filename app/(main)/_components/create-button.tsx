@@ -64,13 +64,6 @@ const CreateButton = () => {
     }
   };
 
-  // const mutation = useMutation({
-  //   mutationFn: onSubmit,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["albums"] });
-  //   },
-  // });
-
   return (
     <Dialog
       open={isOpen}
@@ -81,11 +74,7 @@ const CreateButton = () => {
       }}
     >
       <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button
-          size="sm"
-          variant="outline"
-          className="mt-3 flex items-center g-x-2"
-        >
+        <Button size="sm" variant="ghost" className="border border-primary">
           new album <ArrowRight />
         </Button>
       </DialogTrigger>
