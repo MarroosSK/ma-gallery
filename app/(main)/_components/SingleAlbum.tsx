@@ -5,7 +5,7 @@ import { useImage } from "@/hooks/use-image";
 
 import Image from "next/image";
 import { useState } from "react";
-import { EffectCreative, EffectFlip } from "swiper/modules";
+import { EffectFlip } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -20,6 +20,7 @@ import { ImagePlus, Image as Imageicon, Projector, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import "../../globals.css";
+import { SkeletonImage } from "@/components/skeletons/skeleton-image";
 
 const SingleAlbum = ({ initialData }: any) => {
   const [switcher, setSwitcher] = useState("swiper");
@@ -57,9 +58,9 @@ const SingleAlbum = ({ initialData }: any) => {
     imagePreview.onOpen();
   };
   return (
-    <main className="mx-auto max-w-7xl md:p-10">
+    <main className="mx-auto max-w-7xl p-3 md:p-6">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-4xl text-primary">
+        <h1 className="mb-3 font-bold text-2xl md:text-4xl text-primary">
           {initialData.name}
         </h1>
         <Button
@@ -95,6 +96,7 @@ const SingleAlbum = ({ initialData }: any) => {
       </div>
       {switcher === "swiper" ? (
         <div className="w-full flex flex-wrap items-center justify-center gap-3">
+          {!initialData.photos && Array(6).fill(<SkeletonImage />)}
           {initialData.photos &&
             initialData.photos.map((pic: any, index: number) => (
               <div key={index} className="relative">
@@ -104,7 +106,7 @@ const SingleAlbum = ({ initialData }: any) => {
                   width={400}
                   height={400}
                   quality={100}
-                  className="h-[400px] rounded-md bg-white dark:bg-slate-800 p-4  cursor-pointer"
+                  className="h-[400px] rounded-md bg-white dark:bg-[#292524] p-4  cursor-pointer"
                   onClick={() => handlePreview(pic.url)}
                 />
                 <Button

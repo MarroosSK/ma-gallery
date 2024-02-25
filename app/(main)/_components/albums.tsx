@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Album, Trash } from "lucide-react";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import { Spinner } from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import CreateButton from "./create-button";
+import { useSidebarUpdate } from "@/hooks/use-sidebar-refresh";
 
 const Albums = ({ myAlbums }: { myAlbums: any }) => {
   const router = useRouter();
@@ -28,21 +29,24 @@ const Albums = ({ myAlbums }: { myAlbums: any }) => {
       toast.success("Succesfully deleted!");
       setCurrentlyDeletingFile(null);
       router.refresh();
+      window.location.reload();
     } else {
       toast.error("Error has occured!");
     }
   };
 
   return (
-    <main className="mx-auto max-w-7xl md:p-10">
-      <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-4xl text-primary">My Albums</h1>
+    <main className="mx-auto max-w-7xl p-3 md:p-6">
+      <div className="mt-8 flex flex-col items-start justify-between gap-x-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
+        <h1 className="mb-3 font-bold text-2xl md:text-4xl text-primary">
+          My Albums
+        </h1>
         <CreateButton />
       </div>
 
       <div>
         {myAlbums && myAlbums.length !== 0 ? (
-          <ul className="mt-8 grid grid-cols-1 gap-6  md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-3   lg:grid-cols-3">
             {myAlbums.map((res: any) => (
               <li
                 key={res?.id}

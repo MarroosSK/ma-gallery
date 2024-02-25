@@ -13,7 +13,7 @@ const Hero = () => {
   const { isSignedIn, isLoaded } = useUser();
 
   return (
-    <div className="max-w-3xl mx-auto text-center space-y-6">
+    <div className="px-3 max-w-3xl mx-auto text-center space-y-6">
       <h1 className="text-3xl font-bold tracking-tight lg:text-6xl">
         Your moments captured in time. Welcome to{" "}
         <span className="underline text-primary">MAGallery</span>

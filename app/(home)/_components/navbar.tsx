@@ -10,13 +10,14 @@ import { useScrollTop } from "@/hooks/use-scroll-top";
 import { cn } from "@/lib/utils";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
 import { useUser } from "@clerk/nextjs";
+import { FolderOpen } from "lucide-react";
 
 const Navbar = () => {
   const scrolled = useScrollTop();
   const { isSignedIn, isLoaded } = useUser();
 
   return (
-    <div
+    <nav
       className={cn(
         "p-6 bg-background dark:bg-[#1F1F1F] fixed  flex items-center justify-between  w-full",
         scrolled && "border-b shadow-sm"
@@ -25,7 +26,7 @@ const Navbar = () => {
       <Link href="/">
         <h2 className="text-1xl font-semibold text-primary">MAGallery</h2>
       </Link>
-      <div className="ml-auto  w-full flex items-center md:justify-end justify-between gap-x-2">
+      <div className="ml-auto  w-full flex items-center justify-end  gap-x-2">
         {!isLoaded && <Spinner />}
 
         {/* IF NOT AUTHENTICATED */}
@@ -46,14 +47,16 @@ const Navbar = () => {
               size="sm"
               asChild
             >
-              <Link href="/gallery">Enter gallery</Link>
+              <Link href="/gallery">
+                <FolderOpen />
+              </Link>
             </Button>
             <UserButton afterSignOutUrl="/" />
           </>
         )}
         <ModeToggle />
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -53,19 +53,18 @@ export const ImageModal = () => {
 
   return (
     <Dialog open={image.isOpen} onOpenChange={image.onClose}>
-      <DialogContent>
-        <DialogHeader className="border-b pb-3">
+      <DialogContent className="mx-3">
+        <DialogHeader className="border-b pb-3 ">
           <h2 className="text-lg font-medium">Add Picture</h2>
         </DialogHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-x-2">
           <div className="flex flex-col gap-y-1">
-            <Label>Picture</Label>
-            <span className="text-[0.8rem] text-muted-foreground">
-              Add image in .jpg format
-            </span>
+            <Label>Allowed formats</Label>
+
+            <span className="text-[0.8rem] text-muted-foreground">.jpg</span>
           </div>
           <SingleImageDropzone
-            className="w-full outline-none"
+            className=" outline-none"
             disabled={isSubmitting}
             value={file}
             onChange={onChange}

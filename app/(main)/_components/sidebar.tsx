@@ -19,6 +19,7 @@ import { Item } from "./item";
 function Sidebar() {
   const router = useRouter();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const sidebarRef2 = useRef<HTMLDivElement | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const [sidebarWidth, setSidebarWidth] = useState(0);
@@ -30,7 +31,7 @@ function Sidebar() {
     if (sidebarRef.current) {
       setIsCollapsed(false);
 
-      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+      sidebarRef.current.style.width = isMobile ? "135px" : "200px";
     }
   };
 
@@ -57,7 +58,7 @@ function Sidebar() {
         style={{ width: sidebarWidth }}
         onMouseDown={(e) => e.preventDefault()}
         className={cn(
-          " group/sidebar h-full   overflow-x-hidden relative flex w-60 flex-col   max-w-[350px] transition-all ease-in-out"
+          "h-screen absolute top-0 left-0 z-[999997] md:relative group/sidebar overflow-x-hidden  flex  flex-col  transition-all ease-in-out border-r shadow-sm bg-white dark:bg-[#292524]"
         )}
       >
         <div className="flex flex-col justify-end mb-5 gap-y-2 absolute right-3 p-4">
